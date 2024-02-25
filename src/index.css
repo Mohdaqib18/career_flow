@@ -3,5 +3,32 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
- 
+
+}
+
+
+.col::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #b0c3de;
+}
+
+/* Firefox */
+.col::-moz-scrollbar {
+    width: 5px;
+}
+
+.col::-moz-scrollbar-thumb {
+    background-color: #b0c3de;
+}
+
+/* Edge */
+.col::-ms-scrollbar {
+    width: 5px;
+}
+
+.col::-ms-scrollbar-thumb {
+    background-color: #b0c3de;
 }
