@@ -1,15 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { Layout, theme } from "antd";
+import { Layout, theme, Form } from "antd";
 
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
 import JobTrackerHeader from "./components/JobTrackerHeader";
 import JobTrackerMain from "./components/JobTrackerMain";
+import JobTrackerForm from "./components/JobTrackerForm";
 
 const { Content } = Layout;
 
 const App: React.FC = () => {
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	
+
+	const handleOk = () => {
+		setIsModalOpen(false);
+	};
+
+	const handleCancel = () => {
+	
+		setIsModalOpen(false);
+	};
+	const showModal = () => {
+		setIsModalOpen(true);
+	};
+
 	const {
 		token: { colorBgContainer, borderRadiusLG },
 	} = theme.useToken();
@@ -46,8 +62,13 @@ const App: React.FC = () => {
 							flexDirection: "column",
 						}}
 					>
-						<JobTrackerHeader />
+						<JobTrackerHeader showModal={showModal} />
 						<JobTrackerMain />
+						<JobTrackerForm
+							isModalOpen={isModalOpen}
+							handleOk={handleOk}
+							handleCancel={handleCancel}
+						/>
 					</Content>
 				</Layout>
 			</Content>

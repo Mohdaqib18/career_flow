@@ -34,7 +34,8 @@ const items = [
 	label: `${item.label}`,
 }));
 
-const SideBar = () => {
+
+const SideBar: React.FC = () => {
 	const {
 		token: { colorBgContainer, borderRadiusLG },
 	} = theme.useToken();
@@ -44,7 +45,6 @@ const SideBar = () => {
 			style={{
 				height: "100%",
 				position: "relative",
-			
 			}}
 		>
 			<Sider

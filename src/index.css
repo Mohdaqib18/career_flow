@@ -32,3 +32,8 @@ body {
 .col::-ms-scrollbar-thumb {
     background-color: #b0c3de;
 }
+
+.input_modal:placeholder-shown {
+    color: #96a0b5;
+    font-size: 14px;
+}

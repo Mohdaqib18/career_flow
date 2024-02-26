@@ -13,7 +13,7 @@ const style: React.CSSProperties = {
 };
 
 const colCategories = ["Saved", "Applied", "Interviewing", "Offer", "Rejected"];
-const JobTrackerMain = () => {
+const JobTrackerMain: React.FC = () => {
 	return (
 		<div style={{ overflowX: "scroll", flex: 1 }}>
 			<Row

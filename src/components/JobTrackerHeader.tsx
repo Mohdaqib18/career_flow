@@ -1,4 +1,3 @@
-
 import type { SearchProps } from "antd/es/input/Search";
 import { PlusSquareOutlined } from "@ant-design/icons";
 
@@ -9,8 +8,12 @@ const { RangePicker } = DatePicker;
 const onSearch: SearchProps["onSearch"] = (value, _e, info) =>
 	console.log(info?.source, value);
 
-const JobTrackerHeader = () => {
-  return (
+interface JobTrackerHeaderProps {
+	showModal: (e: any) => void;
+}
+
+const JobTrackerHeader: React.FC<JobTrackerHeaderProps> = ({ showModal }) => {
+	return (
 		<div>
 			<div
 				style={{
@@ -41,7 +44,7 @@ const JobTrackerHeader = () => {
 						placeholder={["AddedFrom", "AddedUntil"]}
 					/>
 
-					<Button type="primary">
+					<Button type="primary" onClick={showModal}>
 						<span>Add Job</span>
 						<PlusSquareOutlined />
 					</Button>
@@ -49,6 +52,6 @@ const JobTrackerHeader = () => {
 			</div>
 		</div>
 	);
-}
+};
 
-export default JobTrackerHeader
+export default JobTrackerHeader;
