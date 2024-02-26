@@ -1,4 +1,5 @@
 import { Col, Divider, Row } from "antd";
+import JobCard from "./JobCard";
 
 const style: React.CSSProperties = {
 	background: "#e1edff",
@@ -62,12 +63,16 @@ const JobTrackerMain: React.FC = () => {
 								style={{
 									flex: 1,
 									background: "radial-gradient(#d6e4f8 20%,#0000 0)",
-									backgroundPosition: "0 0,50px 50px",
+									backgroundPosition: "0 0 50px 50px",
 									backgroundSize: "20px 20px",
 									overflowY: "scroll",
+									// paddingLeft: "5px",
 								}}
 								className="col"
-							></div>
+							>
+								<JobCard />
+							
+							</div>
 						</div>
 					</Col>
 				))}

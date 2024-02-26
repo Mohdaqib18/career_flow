@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import { Button, Checkbox, Form, Input, Modal, Select } from "antd";
-
-const onFinish = (values: any) => {
-	console.log("Success:", values);
-};
+import { useJobInfoStore } from "../../store/store";
 
 const onFinishFailed = (errorInfo: any) => {
 	console.log("Failed:", errorInfo);
 };
 
-type FieldType = {
-	username?: string;
-	password?: string;
-	remember?: string;
+const getDate = () => {
+	const currentDate = new Date();
+	const year = currentDate.getFullYear();
+	const month = currentDate.getMonth() + 1;
+	const day = currentDate.getDate();
+
+	const date = `${year}-${month}-${day}`;
+	return date;
 };
 
 interface Props {
@@ -28,6 +29,24 @@ const JobTrackerForm: React.FC<Props> = ({
 }: Props) => {
 	const [form] = Form.useForm();
 	const { Option } = Select;
+	const jobTitle = useJobInfoStore((state) => state.jobTitle);
+	const tags = useJobInfoStore((state) => state.tags);
+	const date = useJobInfoStore((state) => state.date);
+	const updateJobTitle = useJobInfoStore((state) => state.updateJobTitle);
+	const updateTags = useJobInfoStore((state) => state.updateTags);
+	const updateDate = useJobInfoStore((state) => state.updateDate);
+	const updateCompanyName = useJobInfoStore((state) => state.updateCompanyName);
+	const onFinish = (values: any) => {
+		console.log("Success:", values);
+		updateJobTitle(values.jobtitle);
+		updateTags(values.tags);
+		updateCompanyName(values.companyName);
+		updateDate(getDate());
+	};
+
+	console.log(jobTitle);
+	console.log(tags);
+	console.log(date);
 	return (
 		<div>
 			<Modal
@@ -40,6 +59,7 @@ const JobTrackerForm: React.FC<Props> = ({
 					form.resetFields();
 					handleCancel(e);
 				}}
+				afterOpenChange={() => form.resetFields()}
 			>
 				<Form
 					form={form}
@@ -184,9 +204,9 @@ const JobTrackerForm: React.FC<Props> = ({
 									background: "#fbfcfc",
 								}}
 							>
-								<Option value="red">Frontend Developer</Option>
-								<Option value="green">Backend Developer</Option>
-								<Option value="blue">Fullstack Developer</Option>
+								<Option value="frontend developer">Frontend Developer</Option>
+								<Option value="backend developer">Backend Developer</Option>
+								<Option value="fullstack developer">Fullstack Developer</Option>
 							</Select>
 						</Form.Item>
 					</div>
@@ -225,6 +245,7 @@ const JobTrackerForm: React.FC<Props> = ({
 								backgroundColor: "#508de8",
 								fontSize: "15px",
 							}}
+							onClick={handleOk}
 						>
 							Submit
 						</Button>
