@@ -4,26 +4,36 @@ import { Layout, theme, Form } from "antd";
 
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
-import JobTrackerHeader from "./components/JobTrackerHeader";
-import JobTrackerMain from "./components/JobTrackerMain";
-import JobTrackerForm from "./components/JobTrackerForm";
+import JobDashboardHeader from "./components/JobDashboardHeader";
+import JobDashboardMain from "./components/JobDashboardMain";
+import JobTrackerForm from "./components/JobAddForm";
+import JobDetailsForm from "./components/JobDetailsForm";
 
 const { Content } = Layout;
 
 const App: React.FC = () => {
-	const [isModalOpen, setIsModalOpen] = useState(false);
-	
+	const [isAddFormModalOpen, setIsAddFormModalOpen] = useState(false);
+	const [isEditFormModalOpen, setIsEditFormModalOpen] = useState(false);
 
-	const handleOk = () => {
-		setIsModalOpen(false);
+	const handleAddFormOk = () => {
+		setIsAddFormModalOpen(false);
 	};
 
-	const handleCancel = () => {
-	
-		setIsModalOpen(false);
+	const handleAddFormCancel = () => {
+		setIsAddFormModalOpen(false);
 	};
-	const showModal = () => {
-		setIsModalOpen(true);
+	const showAddFormModal = () => {
+		setIsAddFormModalOpen(true);
+	};
+	const handleEditFormOk = () => {
+		setIsEditFormModalOpen(false);
+	};
+
+	const handleEditFormCancel = () => {
+		setIsEditFormModalOpen(false);
+	};
+	const showEditFormModal = () => {
+		setIsEditFormModalOpen(true);
 	};
 
 	const {
@@ -62,12 +72,17 @@ const App: React.FC = () => {
 							flexDirection: "column",
 						}}
 					>
-						<JobTrackerHeader showModal={showModal} />
-						<JobTrackerMain />
+						<JobDashboardHeader showModal={showAddFormModal} />
+						<JobDashboardMain showModal={showEditFormModal} />
 						<JobTrackerForm
-							isModalOpen={isModalOpen}
-							handleOk={handleOk}
-							handleCancel={handleCancel}
+							isModalOpen={isAddFormModalOpen}
+							handleOk={handleAddFormOk}
+							handleCancel={handleAddFormCancel}
+						/>
+						<JobDetailsForm
+							isModalOpen={isEditFormModalOpen}
+							handleOk={handleEditFormOk}
+							handleCancel={handleEditFormCancel}
 						/>
 					</Content>
 				</Layout>

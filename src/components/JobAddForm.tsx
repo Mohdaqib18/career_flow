@@ -34,13 +34,9 @@ const JobTrackerForm: React.FC<Props> = ({
 }: Props) => {
 	const [form] = Form.useForm();
 	const { Option } = Select;
-	const jobTitle = useJobInfoStore((state) => state.jobTitle);
-	const tags = useJobInfoStore((state) => state.tags);
-	const date = useJobInfoStore((state) => state.date);
-	const section = useJobInfoStore((state) => state.section);
+
 	const jobs = useJobInfoStore((state) => state.jobs);
 
-	const companyName = useJobInfoStore((state) => state.companyName);
 	const updateJobTitle = useJobInfoStore((state) => state.updateJobTitle);
 	const updateTags = useJobInfoStore((state) => state.updateTags);
 	const updateDate = useJobInfoStore((state) => state.updateDate);
@@ -65,11 +61,6 @@ const JobTrackerForm: React.FC<Props> = ({
 			values.section
 		);
 	};
-
-	console.log(jobTitle);
-	console.log(tags);
-	console.log(section);
-	console.log(jobs);
 
 	return (
 		<div>
@@ -173,6 +164,7 @@ const JobTrackerForm: React.FC<Props> = ({
 							rules={[
 								{ required: true, message: "Please select your country!" },
 							]}
+							initialValue={"Applied"}
 						>
 							<Select
 								placeholder="Please select a country"
@@ -181,12 +173,13 @@ const JobTrackerForm: React.FC<Props> = ({
 									borderRadius: "3px",
 									background: "#fbfcfc",
 								}}
+						
 							>
-								<Option value="saved">Saved</Option>
-								<Option value="applied">Applied</Option>
-								<Option value="interviewing">Interviewing</Option>
-								<Option value="offer">Offer</Option>
-								<Option value="rejected">Rejected</Option>
+								<Option value="Saved">Saved</Option>
+								<Option value="Applied">Applied</Option>
+								<Option value="Interviewing">Interviewing</Option>
+								<Option value="Offer">Offer</Option>
+								<Option value="Rejected">Rejected</Option>
 							</Select>
 						</Form.Item>
 						<Form.Item
@@ -197,7 +190,7 @@ const JobTrackerForm: React.FC<Props> = ({
 							wrapperCol={{ span: 24 }}
 						>
 							<Input.TextArea
-								placeholder="Paste of Type the Job Descriotion here"
+								placeholder="Please type the Job Description here"
 								style={{
 									height: "100px",
 									borderRadius: "3px",

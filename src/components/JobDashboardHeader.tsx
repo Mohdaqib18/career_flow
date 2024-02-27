@@ -8,11 +8,13 @@ const { RangePicker } = DatePicker;
 const onSearch: SearchProps["onSearch"] = (value, _e, info) =>
 	console.log(info?.source, value);
 
-interface JobTrackerHeaderProps {
+interface JobDashboardHeaderProps {
 	showModal: (e: any) => void;
 }
 
-const JobTrackerHeader: React.FC<JobTrackerHeaderProps> = ({ showModal }) => {
+const JobDashboardHeader: React.FC<JobDashboardHeaderProps> = ({
+	showModal,
+}) => {
 	return (
 		<div>
 			<div
@@ -54,4 +56,4 @@ const JobTrackerHeader: React.FC<JobTrackerHeaderProps> = ({ showModal }) => {
 	);
 };
 
-export default JobTrackerHeader;
+export default JobDashboardHeader;

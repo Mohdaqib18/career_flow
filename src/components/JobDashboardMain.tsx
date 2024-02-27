@@ -14,8 +14,12 @@ const style: React.CSSProperties = {
 	flexDirection: "column",
 };
 
-// const colCategories = ["saved", "applied", "interviewing", "offer", "rejected"];
-const JobTrackerMain: React.FC = () => {
+interface Props {
+	showModal: () => void;
+}
+
+// const colCategories = ["Saved", "Applied", "Interviewing", "Offer", "Rejected"];
+const JobDashboardMain: React.FC<Props> = ({ showModal }) => {
 	// const section = useJobInfoStore((state) => state.section);
 	const jobs = useJobInfoStore((state) => state.jobs);
 
@@ -38,7 +42,7 @@ const JobTrackerMain: React.FC = () => {
 								}}
 							>
 								<span style={{ fontSize: "18px", fontWeight: "500" }}>
-									{category.charAt(0).toUpperCase() + category.slice(1)}
+									{category}
 								</span>
 
 								<div
@@ -75,12 +79,12 @@ const JobTrackerMain: React.FC = () => {
 								className="col"
 							>
 								{jobsArray.map((item, index) => (
-									
 									<JobCard
 										jobTitle={item.jobTitle}
 										companyName={item.companyName}
 										date={item.date}
 										key={index}
+										showModal={showModal}
 									/>
 								))}
 							</div>
@@ -92,4 +96,4 @@ const JobTrackerMain: React.FC = () => {
 	);
 };
 
-export default JobTrackerMain;
+export default JobDashboardMain;

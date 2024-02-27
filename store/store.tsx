@@ -30,7 +30,7 @@ export const useJobInfoStore = create<State & Action>((set) => ({
 	description: "",
 	date: "",
 	section: "",
-	jobs: { applied: [], interviewing: [], rejected: [], offer: [], saved: [] },
+	jobs: { Saved: [], Applied: [], Interviewing: [], Offer: [], Rejected: [] },
 	tags: [],
 
 	updateJobTitle: (jobTitle) => set(() => ({ jobTitle: jobTitle })),
