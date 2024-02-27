@@ -5,8 +5,10 @@ type State = {
 	companyName: string;
 	jobUrl: string;
 	description: string;
-	tags: Array<[]>;
-    date: string
+	date: string;
+	section: string;
+	jobs: any;
+	tags: any[];
 };
 
 type Action = {
@@ -14,8 +16,10 @@ type Action = {
 	updateCompanyName: (companyName: State["companyName"]) => void;
 	updateJobUrl: (jobUrl: State["jobUrl"]) => void;
 	updateDescription: (description: State["description"]) => void;
+	updateSection: (section: State["section"]) => void;
 	updateTags: (tags: State["tags"]) => void;
-	updateDate: (date: State["date"]) => void
+	updateDate: (date: State["date"]) => void;
+	updateJobs: (job: any, category: any) => void;
 };
 
 // Create your store, which includes both state and (optionally) actions
@@ -24,8 +28,10 @@ export const useJobInfoStore = create<State & Action>((set) => ({
 	companyName: "",
 	jobUrl: "",
 	description: "",
-	tags: [],
 	date: "",
+	section: "",
+	jobs: { applied: [], interviewing: [], rejected: [], offer: [], saved: [] },
+	tags: [],
 
 	updateJobTitle: (jobTitle) => set(() => ({ jobTitle: jobTitle })),
 	updateCompanyName: (companyName) =>
@@ -36,11 +42,19 @@ export const useJobInfoStore = create<State & Action>((set) => ({
 		set(() => ({
 			jobUrl: jobUrl,
 		})),
-
 	updateDescription: (description) =>
 		set(() => ({
 			description: description,
 		})),
 	updateTags: (tags) => set(() => ({ tags: [...tags] })),
-	updateDate: (date) =>  set(() =>({date: date}) )
+	updateDate: (date) => set(() => ({ date: date })),
+	updateSection: (section) => set(() => ({ section: section })),
+	updateJobs: (job, category) =>
+		set((state) => ({
+			...state,
+			jobs: {
+				...state.jobs,
+				[category]: [job, ...(state.jobs[category] || [])],
+			},
+		})),
 }));

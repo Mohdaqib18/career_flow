@@ -3,11 +3,16 @@ import { useJobInfoStore } from "../../store/store";
 import company_placeholder_image from "../assets/images/company_placeholder_image.png";
 import job_placeholder_image from "../assets/images/job_placeholder_image.png";
 
-const JobCard: React.FC = () => {
-	const jobTitle = useJobInfoStore((state) => state.jobTitle);
-	const tags = useJobInfoStore((state) => state.tags);
-	const date = useJobInfoStore((state) => state.date);
-	const companyName = useJobInfoStore((state) => state.companyName);
+const JobCard = ({
+	jobTitle,
+	companyName,
+	date
+}: {
+	jobTitle: string;
+	companyName: string;
+	date:string
+}) => {
+	
 	return (
 		<Row
 			style={{ margin: "10px 0", display: "flex", justifyContent: "center" }}

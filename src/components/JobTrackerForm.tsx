@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Checkbox, Form, Input, Modal, Select } from "antd";
 import { useJobInfoStore } from "../../store/store";
 
@@ -21,6 +21,11 @@ interface Props {
 	handleCancel: (e: any) => void;
 	handleOk: (e: any) => void;
 }
+function generateUniqueId(): string {
+	const timestamp = new Date().getTime();
+	const random = Math.floor(Math.random() * 10000);
+	return `${timestamp}-${random}`;
+}
 
 const JobTrackerForm: React.FC<Props> = ({
 	isModalOpen,
@@ -32,21 +37,40 @@ const JobTrackerForm: React.FC<Props> = ({
 	const jobTitle = useJobInfoStore((state) => state.jobTitle);
 	const tags = useJobInfoStore((state) => state.tags);
 	const date = useJobInfoStore((state) => state.date);
+	const section = useJobInfoStore((state) => state.section);
+	const jobs = useJobInfoStore((state) => state.jobs);
+
+	const companyName = useJobInfoStore((state) => state.companyName);
 	const updateJobTitle = useJobInfoStore((state) => state.updateJobTitle);
 	const updateTags = useJobInfoStore((state) => state.updateTags);
 	const updateDate = useJobInfoStore((state) => state.updateDate);
+	const updateSection = useJobInfoStore((state) => state.updateSection);
 	const updateCompanyName = useJobInfoStore((state) => state.updateCompanyName);
+	const updateJobs = useJobInfoStore((state) => state.updateJobs);
+
 	const onFinish = (values: any) => {
 		console.log("Success:", values);
 		updateJobTitle(values.jobtitle);
 		updateTags(values.tags);
-		updateCompanyName(values.companyName);
+		updateCompanyName(values.jobtitle);
 		updateDate(getDate());
+		updateSection(values.section);
+		updateJobs(
+			{
+				jobTitle: values.jobtitle,
+				companyName: values.companyName,
+				date: getDate(),
+				jobId: generateUniqueId(),
+			},
+			values.section
+		);
 	};
 
 	console.log(jobTitle);
 	console.log(tags);
-	console.log(date);
+	console.log(section);
+	console.log(jobs);
+
 	return (
 		<div>
 			<Modal

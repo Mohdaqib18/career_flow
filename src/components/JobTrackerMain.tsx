@@ -1,5 +1,6 @@
 import { Col, Divider, Row } from "antd";
 import JobCard from "./JobCard";
+import { useJobInfoStore } from "../../store/store";
 
 const style: React.CSSProperties = {
 	background: "#e1edff",
@@ -13,8 +14,11 @@ const style: React.CSSProperties = {
 	flexDirection: "column",
 };
 
-const colCategories = ["Saved", "Applied", "Interviewing", "Offer", "Rejected"];
+// const colCategories = ["saved", "applied", "interviewing", "offer", "rejected"];
 const JobTrackerMain: React.FC = () => {
+	// const section = useJobInfoStore((state) => state.section);
+	const jobs = useJobInfoStore((state) => state.jobs);
+
 	return (
 		<div style={{ overflowX: "scroll", flex: 1 }}>
 			<Row
@@ -22,8 +26,8 @@ const JobTrackerMain: React.FC = () => {
 				wrap={false}
 				style={{ height: "100%" }}
 			>
-				{colCategories.map((category) => (
-					<Col className="gutter-row" span={6}>
+				{Object.entries(jobs).map(([category, jobsArray], index) => (
+					<Col className="gutter-row" span={6} key={index}>
 						<div style={style}>
 							<div
 								style={{
@@ -34,7 +38,7 @@ const JobTrackerMain: React.FC = () => {
 								}}
 							>
 								<span style={{ fontSize: "18px", fontWeight: "500" }}>
-									{category}
+									{category.charAt(0).toUpperCase() + category.slice(1)}
 								</span>
 
 								<div
@@ -54,7 +58,7 @@ const JobTrackerMain: React.FC = () => {
 											fontWeight: "500",
 										}}
 									>
-										5 Jobs
+										{jobsArray.length}
 									</span>
 								</div>
 							</div>
@@ -70,8 +74,15 @@ const JobTrackerMain: React.FC = () => {
 								}}
 								className="col"
 							>
-								<JobCard />
-							
+								{jobsArray.map((item, index) => (
+									
+									<JobCard
+										jobTitle={item.jobTitle}
+										companyName={item.companyName}
+										date={item.date}
+										key={index}
+									/>
+								))}
 							</div>
 						</div>
 					</Col>
