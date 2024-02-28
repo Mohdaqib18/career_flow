@@ -48,8 +48,8 @@ const App: React.FC = () => {
 						}}
 					>
 						<JobDashboard />
-						<JobDetailsForm />
 						<JobAddForm />
+						<JobDetailsForm />
 					</Content>
 				</Layout>
 			</Content>

@@ -30,7 +30,8 @@ type Action = {
 	updateSection: (section: State["section"]) => void;
 	updateTags: (tags: State["tags"]) => void;
 	updateDate: (date: State["date"]) => void;
-	updateJobs: (job: any, category: any) => void;
+	addJob: (job: any, category: any) => void;
+	deleteJob: (job:any, category:any) => void;
 	handleAddFormOk: () => void;
 	handleAddFormCancel: () => void;
 	showAddFormModal: () => void;
@@ -49,7 +50,36 @@ export const useJobInfoStore = create<State & Action>((set) => ({
 	section: "",
 	isAddFormModalOpen: false,
 	isJobDetailsModalOpen: false,
-	jobs: { Saved: [], Applied: [], Interviewing: [], Offer: [], Rejected: [] },
+	jobs: {
+		Saved: [
+			{
+				jobTitle: "Software Engineer",
+				companyName: "Meta",
+				description: "Frontend development team",
+				date: "28-02-2024",
+				jobId: "184",
+			},
+		],
+		Applied: [
+			{
+				jobTitle: "Software Engineer",
+				companyName: "Google",
+				description: "Backend development team",
+				date: "28-02-2024",
+				jobId: "124",
+			},
+			{
+				jobTitle: "Product Manager",
+				companyName: "Apple",
+				description: "Fullstack development team",
+				date: "28-02-2024",
+				jobId: "122",
+			},
+		],
+		Interviewing: [],
+		Offer: [],
+		Rejected: [],
+	},
 	tags: [],
 	clickedJobCardId: "",
 
@@ -69,12 +99,20 @@ export const useJobInfoStore = create<State & Action>((set) => ({
 	updateTags: (tags) => set(() => ({ tags: [...tags] })),
 	updateDate: (date) => set(() => ({ date: date })),
 	updateSection: (section) => set(() => ({ section: section })),
-	updateJobs: (job, category) =>
+	addJob: (job, category) =>
 		set((state) => ({
 			...state,
 			jobs: {
 				...state.jobs,
 				[category]: [job, ...(state.jobs[category] || [])],
+			},
+		})),
+	deleteJob: (job, category) =>
+		set((state) => ({
+			...state,
+			jobs: {
+				...state.jobs,
+				[category]: [...job],
 			},
 		})),
 	updateJobCardIdClicked: (id) => set(() => ({ clickedJobCardId: id })),

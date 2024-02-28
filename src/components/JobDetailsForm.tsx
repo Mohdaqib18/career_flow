@@ -1,15 +1,4 @@
-import {
-	Button,
-	Checkbox,
-	Form,
-	Input,
-	Modal,
-	Select,
-	Menu,
-	Tooltip,
-	Row,
-	Col,
-} from "antd";
+import { Button, Form, Modal, Select, Menu, Row, Col } from "antd";
 import company_placeholder_image from "../assets/images/company_placeholder_image.png";
 import job_placeholder_image from "../assets/images/job_placeholder_image.png";
 import salary from "../assets/images/salary.png";
@@ -54,10 +43,29 @@ const items = [
 	label: `${item.label}`,
 }));
 
-const JobDetailsForm: React.FC<Props> = () => {
+const JobDetailsForm: React.FC<Props> = ({}) => {
 	const [form] = Form.useForm();
 	const { Option } = Select;
 	const [currentKey, setCurrentKey] = useState("Overview");
+
+	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+	const showDeleteModal = () => {
+		setIsDeleteModalOpen(true);
+	};
+
+	const handleDeletaOk = () => {
+		setIsDeleteModalOpen(false);
+
+		setTimeout(() => {
+			handleDeleteButton();
+		}, 1);
+	};
+
+	const handleDeleteCancel = () => {
+		setIsDeleteModalOpen(false);
+	};
+
 	const handleJobDetailsCancel = useJobInfoStore(
 		(state) => state.handleJobDetailsCancel
 	);
@@ -68,7 +76,18 @@ const JobDetailsForm: React.FC<Props> = () => {
 		(state) => state.isJobDetailsModalOpen
 	);
 	const jobs = useJobInfoStore((state) => state.jobs);
+	const deleteJob = useJobInfoStore((state) => state.deleteJob);
 	const clickedJobCardId = useJobInfoStore((state) => state.clickedJobCardId);
+	const handleDeleteButton = () => {
+		Object.entries(jobs).map(([category, jobsArray], index) =>
+			deleteJob(
+				jobsArray.filter((item: any) => item.jobId !== clickedJobCardId),
+				category
+			)
+		);
+
+		handleJobDetailsFormOk();
+	};
 
 	return (
 		<div>
@@ -123,7 +142,7 @@ const JobDetailsForm: React.FC<Props> = () => {
 								>
 									<span style={{ fontSize: "22px" }}>
 										{Object.entries(jobs).map(
-											([category, jobsArray], index)  => (
+											([category, jobsArray], index) => (
 												<p>
 													{
 														jobsArray.filter(
@@ -180,8 +199,23 @@ const JobDetailsForm: React.FC<Props> = () => {
 									</div>
 								</div>
 							</div>
+							<div>
+								<Modal
+									style={{ fontWeight: "bold", top: "200px" }}
+									onOk={handleDeletaOk}
+									onCancel={handleDeleteCancel}
+									open={isDeleteModalOpen}
+								>
+									<div>Do you want to delete this job?</div>
+								</Modal>
+							</div>
+
 							<div style={{ display: "flex", gap: "10px" }}>
-								<Button danger style={{ borderRadius: "4px" }}>
+								<Button
+									danger
+									style={{ borderRadius: "4px" }}
+									onClick={showDeleteModal}
+								>
 									Delete
 								</Button>
 								<Button style={{ borderRadius: "4px" }} type={"primary"}>
@@ -340,8 +374,9 @@ const JobDetailsForm: React.FC<Props> = () => {
 												([category, jobsArray], index) => (
 													<p>
 														{
-															jobsArray.filter((item) => item.jobId === clickedJobCardId)[0]
-																?.companyName
+															jobsArray.filter(
+																(item) => item.jobId === clickedJobCardId
+															)[0]?.companyName
 														}
 													</p>
 												)

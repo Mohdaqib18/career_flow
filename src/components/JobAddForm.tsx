@@ -16,9 +16,7 @@ const getDate = () => {
 	return date;
 };
 
-interface Props {
-	
-}
+interface Props {}
 function generateUniqueId(): string {
 	const timestamp = new Date().getTime();
 	const random = Math.floor(Math.random() * 10000);
@@ -43,7 +41,7 @@ const JobAddForm: React.FC<Props> = () => {
 	const updateDate = useJobInfoStore((state) => state.updateDate);
 	const updateSection = useJobInfoStore((state) => state.updateSection);
 	const updateCompanyName = useJobInfoStore((state) => state.updateCompanyName);
-	const updateJobs = useJobInfoStore((state) => state.updateJobs);
+	const addJob = useJobInfoStore((state) => state.addJob);
 
 	const onFinish = (values: any) => {
 		console.log("Success:", values);
@@ -52,13 +50,13 @@ const JobAddForm: React.FC<Props> = () => {
 		updateCompanyName(values.jobtitle);
 		updateDate(getDate());
 		updateSection(values.section);
-		updateJobs(
+		addJob(
 			{
 				jobTitle: values.jobtitle,
 				companyName: values.companyName,
 				date: getDate(),
 				jobId: generateUniqueId(),
-				description: values.description
+				description: values.description,
 			},
 			values.section
 		);
