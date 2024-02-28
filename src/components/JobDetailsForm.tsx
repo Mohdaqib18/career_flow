@@ -45,7 +45,6 @@ const items = [
 
 const JobDetailsForm: React.FC<Props> = ({}) => {
 	const [form] = Form.useForm();
-	const { Option } = Select;
 	const [currentKey, setCurrentKey] = useState("Overview");
 
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -78,6 +77,9 @@ const JobDetailsForm: React.FC<Props> = ({}) => {
 	const jobs = useJobInfoStore((state) => state.jobs);
 	const deleteJob = useJobInfoStore((state) => state.deleteJob);
 	const clickedJobCardId = useJobInfoStore((state) => state.clickedJobCardId);
+	const showJobEditFormModal = useJobInfoStore(
+		(state) => state.showJobEditFormModal
+	);
 	const handleDeleteButton = () => {
 		Object.entries(jobs).map(([category, jobsArray], index) =>
 			deleteJob(
@@ -141,17 +143,14 @@ const JobDetailsForm: React.FC<Props> = ({}) => {
 									}}
 								>
 									<span style={{ fontSize: "22px" }}>
-										{Object.entries(jobs).map(
-											([category, jobsArray], index) => (
-												<p>
-													{
-														jobsArray.filter(
-															(item: any) => item.jobId === clickedJobCardId
-														)[0]?.jobTitle
-													}
-												</p>
-											)
-										)}
+										{
+											Object.values(jobs)
+												.find((item) =>
+													item.find((item) => item.jobId === clickedJobCardId)
+												)
+												?.find((item) => item.jobId === clickedJobCardId)
+												?.jobTitle
+										}
 									</span>
 									<div style={{ display: "flex", gap: "15px" }}>
 										<div
@@ -163,17 +162,16 @@ const JobDetailsForm: React.FC<Props> = ({}) => {
 										>
 											<img src={company_placeholder_image} width={24} />
 											<span>
-												{Object.entries(jobs).map(
-													([category, jobsArray], index) => (
-														<p>
-															{
-																jobsArray.filter(
-																	(item: any) => item.jobId === clickedJobCardId
-																)[0]?.companyName
-															}
-														</p>
-													)
-												)}
+												{
+													Object.values(jobs)
+														.find((item) =>
+															item.find(
+																(item) => item.jobId === clickedJobCardId
+															)
+														)
+														?.find((item) => item.jobId === clickedJobCardId)
+														?.companyName
+												}
 											</span>
 										</div>
 										<div
@@ -184,7 +182,14 @@ const JobDetailsForm: React.FC<Props> = ({}) => {
 											}}
 										>
 											<img src={location} width={24} />
-											<span>Location Not Specified</span>
+											<span>
+												{Object.values(jobs)
+													.find((item) =>
+														item.find((item) => item.jobId === clickedJobCardId)
+													)
+													?.find((item) => item.jobId === clickedJobCardId)
+													?.location || "Location not specified"}
+											</span>
 										</div>
 										<div
 											style={{
@@ -194,7 +199,14 @@ const JobDetailsForm: React.FC<Props> = ({}) => {
 											}}
 										>
 											<img src={salary} width={24} />
-											<span>Salary: Not Specified</span>
+											<span>
+												{Object.values(jobs)
+													.find((item) =>
+														item.find((item) => item.jobId === clickedJobCardId)
+													)
+													?.find((item) => item.jobId === clickedJobCardId)
+													?.salary || "Salary: not specified"}
+											</span>
 										</div>
 									</div>
 								</div>
@@ -205,6 +217,7 @@ const JobDetailsForm: React.FC<Props> = ({}) => {
 									onOk={handleDeletaOk}
 									onCancel={handleDeleteCancel}
 									open={isDeleteModalOpen}
+									width={"35%"}
 								>
 									<div>Do you want to delete this job?</div>
 								</Modal>
@@ -218,30 +231,13 @@ const JobDetailsForm: React.FC<Props> = ({}) => {
 								>
 									Delete
 								</Button>
-								<Button style={{ borderRadius: "4px" }} type={"primary"}>
+								<Button
+									style={{ borderRadius: "4px" }}
+									type={"primary"}
+									onClick={showJobEditFormModal}
+								>
 									Edit
 								</Button>
-								<Form.Item
-									name="section"
-									labelCol={{ span: 24 }}
-									wrapperCol={{ span: 24 }}
-									rules={[
-										{
-											required: true,
-											message: "Please select your country!",
-										},
-									]}
-									initialValue={"Applied"}
-									style={{ width: "120px" }}
-								>
-									<Select>
-										<Option value="Saved">Saved</Option>
-										<Option value="Applied">Applied</Option>
-										<Option value="Interviewing">Interviewing</Option>
-										<Option value="Offer">Offer</Option>
-										<Option value="Rejected">Rejected</Option>
-									</Select>
-								</Form.Item>
 							</div>
 						</div>
 					</div>
@@ -275,24 +271,26 @@ const JobDetailsForm: React.FC<Props> = ({}) => {
 											<span style={{ fontSize: "25px", fontWeight: 600 }}>
 												Tags
 											</span>
-											<span>value</span>
+											<span>
+												{Object.values(jobs)
+													.find((item) =>
+														item.find((item) => item.jobId === clickedJobCardId)
+													)
+													?.find((item) => item.jobId === clickedJobCardId)
+													?.tag.join(", ") || "No tags created"}
+											</span>
 										</div>
 										<div style={{ display: "flex", flexDirection: "column" }}>
 											<span style={{ fontSize: "25px", fontWeight: 600 }}>
 												Description
 											</span>
 											<span>
-												{Object.entries(jobs).map(
-													([category, jobsArray], index) => (
-														<p>
-															{
-																jobsArray.filter(
-																	(item: any) => item.jobId === clickedJobCardId
-																)[0]?.description
-															}
-														</p>
+												{Object.values(jobs)
+													.find((item) =>
+														item.find((item) => item.jobId === clickedJobCardId)
 													)
-												)}
+													?.find((item) => item.jobId === clickedJobCardId)
+													?.description || "Description not provided"}
 											</span>
 										</div>
 									</div>
@@ -370,17 +368,14 @@ const JobDetailsForm: React.FC<Props> = ({}) => {
 									>
 										<img src={company_placeholder_image} width={50} />
 										<span style={{ fontSize: "20px", fontWeight: 500 }}>
-											{Object.entries(jobs).map(
-												([category, jobsArray], index) => (
-													<p>
-														{
-															jobsArray.filter(
-																(item) => item.jobId === clickedJobCardId
-															)[0]?.companyName
-														}
-													</p>
-												)
-											)}
+											{
+												Object.values(jobs)
+													.find((item) =>
+														item.find((item) => item.jobId === clickedJobCardId)
+													)
+													?.find((item) => item.jobId === clickedJobCardId)
+													?.companyName
+											}
 										</span>
 									</div>
 								</div>

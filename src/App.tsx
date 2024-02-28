@@ -8,6 +8,7 @@ import SideBar from "./components/SideBar";
 import JobAddForm from "./components/JobAddForm";
 import JobDetailsForm from "./components/JobDetailsForm";
 import JobDashboard from "./components/JobDashboard";
+import JobEditForm from "./components/JobEditForm";
 
 const { Content } = Layout;
 
@@ -50,6 +51,7 @@ const App: React.FC = () => {
 						<JobDashboard />
 						<JobAddForm />
 						<JobDetailsForm />
+						<JobEditForm/>
 					</Content>
 				</Layout>
 			</Content>

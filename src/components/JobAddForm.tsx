@@ -36,20 +36,11 @@ const JobAddForm: React.FC<Props> = () => {
 		(state) => state.handleAddFormCancel
 	);
 
-	const updateJobTitle = useJobInfoStore((state) => state.updateJobTitle);
-	const updateTags = useJobInfoStore((state) => state.updateTags);
-	const updateDate = useJobInfoStore((state) => state.updateDate);
-	const updateSection = useJobInfoStore((state) => state.updateSection);
-	const updateCompanyName = useJobInfoStore((state) => state.updateCompanyName);
 	const addJob = useJobInfoStore((state) => state.addJob);
 
 	const onFinish = (values: any) => {
 		console.log("Success:", values);
-		updateJobTitle(values.jobtitle);
-		updateTags(values.tags);
-		updateCompanyName(values.jobtitle);
-		updateDate(getDate());
-		updateSection(values.section);
+
 		addJob(
 			{
 				jobTitle: values.jobtitle,
@@ -57,7 +48,13 @@ const JobAddForm: React.FC<Props> = () => {
 				date: getDate(),
 				jobId: generateUniqueId(),
 				description: values.description,
+				tag: values.tags,
+				jobUrl: values.jobUrl,
+				section: values.section,
+				salary:values.salary,
+				location:values.location
 			},
+
 			values.section
 		);
 		handleAddFormOk();
@@ -154,6 +151,44 @@ const JobAddForm: React.FC<Props> = () => {
 									background: "#fbfcfc",
 								}}
 								placeholder="Job Url"
+							/>
+						</Form.Item>
+						<Form.Item
+							label="Salary"
+							labelCol={{ span: 24 }}
+							wrapperCol={{ span: 24 }}
+							name="salary"
+							rules={[
+								{ required: true, message: "Please input the salary!" },
+							]}
+						>
+							<Input
+								style={{
+									height: "42px",
+									border: "2px solid #e5ebf0",
+									borderRadius: "3px",
+									background: "#fbfcfc",
+								}}
+								placeholder="Salary"
+							/>
+						</Form.Item>
+						<Form.Item
+							label="Location"
+							labelCol={{ span: 24 }}
+							wrapperCol={{ span: 24 }}
+							name="location"
+							rules={[
+								{ required: true, message: "Please input the job location!" },
+							]}
+						>
+							<Input
+								style={{
+									height: "42px",
+									border: "2px solid #e5ebf0",
+									borderRadius: "3px",
+									background: "#fbfcfc",
+								}}
+								placeholder="Location"
 							/>
 						</Form.Item>
 
@@ -262,7 +297,6 @@ const JobAddForm: React.FC<Props> = () => {
 								backgroundColor: "#508de8",
 								fontSize: "15px",
 							}}
-							// onClick={handleOk}
 						>
 							Submit
 						</Button>
