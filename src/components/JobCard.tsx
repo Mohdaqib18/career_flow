@@ -1,21 +1,38 @@
 import { Card, Col, Row } from "antd";
-import { useJobInfoStore } from "../../store/store";
+
 import company_placeholder_image from "../assets/images/company_placeholder_image.png";
-import job_placeholder_image from "../assets/images/job_placeholder_image.png";
+
+import { useJobInfoStore } from "../../store/store";
+import JobDetailsForm from "./JobDetailsForm";
 
 const JobCard = ({
 	jobTitle,
 	companyName,
 	date,
-	showModal,
+	id,
 }: {
 	jobTitle: string;
 	companyName: string;
 	date: string;
-	showModal: () => void;
+	id: string;
 }) => {
+	const showJobDetailsFormModal = useJobInfoStore(
+		(state) => state.showJobDetailsFormModal
+	);
+	const updateJobCardIdClicked = useJobInfoStore(
+		(state) => state.updateJobCardIdClicked
+	);
+	const clickedJobCardId = useJobInfoStore((state) => state.clickedJobCardId);
+
+	const handleOnClick = () => {
+		showJobDetailsFormModal();
+		updateJobCardIdClicked(id);
+	};
+
+	console.log(clickedJobCardId);
+
 	return (
-		<div onClick={showModal}>
+		<div onClick={handleOnClick}>
 			<Row
 				style={{ margin: "10px 0", display: "flex", justifyContent: "center" }}
 			>

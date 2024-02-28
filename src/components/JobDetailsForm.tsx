@@ -30,6 +30,7 @@ import {
 	CheckSquareOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
+import { useJobInfoStore } from "../../store/store";
 
 const onFinishFailed = (errorInfo: any) => {
 	console.log("Failed:", errorInfo);
@@ -37,11 +38,7 @@ const onFinishFailed = (errorInfo: any) => {
 const onFinish = (values: any) => {
 	console.log("Success:", values);
 };
-interface Props {
-	isModalOpen: boolean;
-	handleCancel: (e: any) => void;
-	handleOk: (e: any) => void;
-}
+interface Props {}
 
 const items = [
 	{ icon: ProfileOutlined, label: "Overview" },
@@ -57,27 +54,33 @@ const items = [
 	label: `${item.label}`,
 }));
 
-const JobDetailsForm: React.FC<Props> = ({
-	isModalOpen,
-	handleCancel,
-	handleOk,
-}: Props) => {
+const JobDetailsForm: React.FC<Props> = () => {
 	const [form] = Form.useForm();
 	const { Option } = Select;
 	const [currentKey, setCurrentKey] = useState("Overview");
+	const handleJobDetailsCancel = useJobInfoStore(
+		(state) => state.handleJobDetailsCancel
+	);
+	const handleJobDetailsFormOk = useJobInfoStore(
+		(state) => state.handleJobDetailsFormOk
+	);
+	const isJobDetailsModalOpen = useJobInfoStore(
+		(state) => state.isJobDetailsModalOpen
+	);
+	const jobs = useJobInfoStore((state) => state.jobs);
+	const clickedJobCardId = useJobInfoStore((state) => state.clickedJobCardId);
 
-	console.log(currentKey);
 	return (
 		<div>
 			<Modal
 				title="Job Details"
-				open={isModalOpen}
-				onOk={handleOk}
+				open={isJobDetailsModalOpen}
+				onOk={handleJobDetailsFormOk}
 				width={"75%"}
 				footer={""}
 				onCancel={(e) => {
 					form.resetFields();
-					handleCancel(e);
+					handleJobDetailsCancel();
 				}}
 				afterOpenChange={() => {
 					form.resetFields();
@@ -88,7 +91,7 @@ const JobDetailsForm: React.FC<Props> = ({
 			>
 				<Form
 					form={form}
-					name="basic"
+					name="jobDetails"
 					labelCol={{ span: 8 }}
 					wrapperCol={{ span: 16 }}
 					initialValues={{ remember: true }}
@@ -118,7 +121,19 @@ const JobDetailsForm: React.FC<Props> = ({
 										gap: "15px",
 									}}
 								>
-									<span style={{ fontSize: "22px" }}>Software Engineer</span>
+									<span style={{ fontSize: "22px" }}>
+										{Object.entries(jobs).map(
+											([category, jobsArray], index)  => (
+												<p>
+													{
+														jobsArray.filter(
+															(item: any) => item.jobId === clickedJobCardId
+														)[0]?.jobTitle
+													}
+												</p>
+											)
+										)}
+									</span>
 									<div style={{ display: "flex", gap: "15px" }}>
 										<div
 											style={{
@@ -128,7 +143,19 @@ const JobDetailsForm: React.FC<Props> = ({
 											}}
 										>
 											<img src={company_placeholder_image} width={24} />
-											<span>Microsoft</span>
+											<span>
+												{Object.entries(jobs).map(
+													([category, jobsArray], index) => (
+														<p>
+															{
+																jobsArray.filter(
+																	(item: any) => item.jobId === clickedJobCardId
+																)[0]?.companyName
+															}
+														</p>
+													)
+												)}
+											</span>
 										</div>
 										<div
 											style={{
@@ -186,7 +213,7 @@ const JobDetailsForm: React.FC<Props> = ({
 					</div>
 				</Form>
 				<div>
-					<Row>
+					<Row style={{ backgroundColor: "#f8fbfe" }}>
 						<Col span={4}>
 							<Menu
 								onClick={(e) => setCurrentKey(e.key)}
@@ -220,7 +247,19 @@ const JobDetailsForm: React.FC<Props> = ({
 											<span style={{ fontSize: "25px", fontWeight: 600 }}>
 												Description
 											</span>
-											<span>value</span>
+											<span>
+												{Object.entries(jobs).map(
+													([category, jobsArray], index) => (
+														<p>
+															{
+																jobsArray.filter(
+																	(item: any) => item.jobId === clickedJobCardId
+																)[0]?.description
+															}
+														</p>
+													)
+												)}
+											</span>
 										</div>
 									</div>
 									<div>
@@ -297,7 +336,16 @@ const JobDetailsForm: React.FC<Props> = ({
 									>
 										<img src={company_placeholder_image} width={50} />
 										<span style={{ fontSize: "20px", fontWeight: 500 }}>
-											Company Name
+											{Object.entries(jobs).map(
+												([category, jobsArray], index) => (
+													<p>
+														{
+															jobsArray.filter((item) => item.jobId === clickedJobCardId)[0]
+																?.companyName
+														}
+													</p>
+												)
+											)}
 										</span>
 									</div>
 								</div>

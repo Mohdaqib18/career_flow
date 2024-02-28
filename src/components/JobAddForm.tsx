@@ -17,9 +17,7 @@ const getDate = () => {
 };
 
 interface Props {
-	isModalOpen: boolean;
-	handleCancel: (e: any) => void;
-	handleOk: (e: any) => void;
+	
 }
 function generateUniqueId(): string {
 	const timestamp = new Date().getTime();
@@ -27,15 +25,18 @@ function generateUniqueId(): string {
 	return `${timestamp}-${random}`;
 }
 
-const JobTrackerForm: React.FC<Props> = ({
-	isModalOpen,
-	handleCancel,
-	handleOk,
-}: Props) => {
+const JobAddForm: React.FC<Props> = () => {
 	const [form] = Form.useForm();
 	const { Option } = Select;
 
 	const jobs = useJobInfoStore((state) => state.jobs);
+	const isAddFormModalOpen = useJobInfoStore(
+		(state) => state.isAddFormModalOpen
+	);
+	const handleAddFormOk = useJobInfoStore((state) => state.handleAddFormOk);
+	const handleAddFormCancel = useJobInfoStore(
+		(state) => state.handleAddFormCancel
+	);
 
 	const updateJobTitle = useJobInfoStore((state) => state.updateJobTitle);
 	const updateTags = useJobInfoStore((state) => state.updateTags);
@@ -57,28 +58,30 @@ const JobTrackerForm: React.FC<Props> = ({
 				companyName: values.companyName,
 				date: getDate(),
 				jobId: generateUniqueId(),
+				description: values.description
 			},
 			values.section
 		);
+		handleAddFormOk();
 	};
 
 	return (
 		<div>
 			<Modal
 				title="Add Job"
-				open={isModalOpen}
-				onOk={handleOk}
+				open={isAddFormModalOpen}
+				onOk={handleAddFormOk}
 				width={"45%"}
 				footer={""}
 				onCancel={(e) => {
 					form.resetFields();
-					handleCancel(e);
+					handleAddFormCancel();
 				}}
 				afterOpenChange={() => form.resetFields()}
 			>
 				<Form
 					form={form}
-					name="basic"
+					name="addJob"
 					labelCol={{ span: 8 }}
 					wrapperCol={{ span: 16 }}
 					initialValues={{ remember: true }}
@@ -173,7 +176,6 @@ const JobTrackerForm: React.FC<Props> = ({
 									borderRadius: "3px",
 									background: "#fbfcfc",
 								}}
-						
 							>
 								<Option value="Saved">Saved</Option>
 								<Option value="Applied">Applied</Option>
@@ -245,9 +247,9 @@ const JobTrackerForm: React.FC<Props> = ({
 								color: "#276cd2",
 								fontSize: " 15px",
 							}}
-							onClick={(e) => {
+							onClick={() => {
 								form.resetFields();
-								handleCancel(e);
+								handleAddFormCancel();
 							}}
 						>
 							Cancel
@@ -262,7 +264,7 @@ const JobTrackerForm: React.FC<Props> = ({
 								backgroundColor: "#508de8",
 								fontSize: "15px",
 							}}
-							onClick={handleOk}
+							// onClick={handleOk}
 						>
 							Submit
 						</Button>
@@ -273,4 +275,4 @@ const JobTrackerForm: React.FC<Props> = ({
 	);
 };
 
-export default JobTrackerForm;
+export default JobAddForm;
