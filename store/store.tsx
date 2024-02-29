@@ -112,9 +112,12 @@ export const useJobInfoStore = create<State & Action>((set) => ({
 			}));
 		} else {
 			set((state) => {
+				//remove the jobToUpdated from previous section
 				const updatedPrevSectionJobs = state.jobs[jobToUpdate.section].filter(
 					(job) => job.jobId !== state.clickedJobCardId
 				);
+
+				// add updatedJob to the new section
 				const updatedNewSectionJobs = [
 					...(state.jobs[updatedJob.section] || []),
 					updatedJob,
@@ -127,10 +130,6 @@ export const useJobInfoStore = create<State & Action>((set) => ({
 					},
 				};
 			});
-
-			//remove the jobToUpdated from previous section
-
-			// add updatedJob to the new section
 		}
 	},
 	deleteJob: (job, category) =>
