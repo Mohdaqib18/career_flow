@@ -81,7 +81,7 @@ const JobDetailsForm: React.FC<Props> = ({}) => {
 		(state) => state.showJobEditFormModal
 	);
 	const handleDeleteButton = () => {
-		Object.entries(jobs).map(([category, jobsArray], index) =>
+		Object.entries(jobs).forEach(([category, jobsArray], index) =>
 			deleteJob(
 				jobsArray.filter((item: any) => item.jobId !== clickedJobCardId),
 				category
@@ -91,6 +91,7 @@ const JobDetailsForm: React.FC<Props> = ({}) => {
 		handleJobDetailsFormOk();
 	};
 
+	
 	return (
 		<div>
 			<Modal

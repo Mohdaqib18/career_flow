@@ -25,7 +25,7 @@ type Job = {
 type Action = {
 	addJob: (job: any, category: any) => void;
 	deleteJob: (job: any, category: any) => void;
-	editJob: (job: any, category: any) => void;
+	editJob: (jobToUdpate: any, updatedJob: any) => void;
 	handleAddFormOk: () => void;
 	handleAddFormCancel: () => void;
 	showAddFormModal: () => void;
@@ -99,14 +99,40 @@ export const useJobInfoStore = create<State & Action>((set) => ({
 				[category]: [job, ...(state.jobs[category] || [])],
 			},
 		})),
-	editJob: (job, category) =>
-		set((state) => ({
-			...state,
-			jobs: {
-				...state.jobs,
-				[category]: [...(state.jobs[category] || []), ...job],
-			},
-		})),
+
+	editJob: (jobToUpdate, updatedJob) => {
+		if (jobToUpdate.section === updatedJob.section) {
+			set((state) => ({
+				jobs: {
+					...state.jobs,
+					[jobToUpdate.section]: state.jobs[jobToUpdate.section].map((job) =>
+						job.jobId === state.clickedJobCardId ? updatedJob : job
+					),
+				},
+			}));
+		} else {
+			set((state) => {
+				const updatedPrevSectionJobs = state.jobs[jobToUpdate.section].filter(
+					(job) => job.jobId !== state.clickedJobCardId
+				);
+				const updatedNewSectionJobs = [
+					...(state.jobs[updatedJob.section] || []),
+					updatedJob,
+				];
+				return {
+					jobs: {
+						...state.jobs,
+						[jobToUpdate.section]: updatedPrevSectionJobs,
+						[updatedJob.section]: updatedNewSectionJobs,
+					},
+				};
+			});
+
+			//remove the jobToUpdated from previous section
+
+			// add updatedJob to the new section
+		}
+	},
 	deleteJob: (job, category) =>
 		set((state) => ({
 			...state,

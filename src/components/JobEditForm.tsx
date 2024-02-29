@@ -1,20 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Button, Checkbox, Col, Form, Input, Modal, Row, Select } from "antd";
+import React from "react";
+import { Button, Col, Form, Input, Modal, Row, Select } from "antd";
 import { useJobInfoStore } from "../../store/store";
 
 const onFinishFailed = (errorInfo: any) => {
 	console.log("Failed:", errorInfo);
 };
 
-const getDate = () => {
-	const currentDate = new Date();
-	const year = currentDate.getFullYear();
-	const month = currentDate.getMonth() + 1;
-	const day = currentDate.getDate();
 
-	const date = `${year}-${month}-${day}`;
-	return date;
-};
 
 interface Props {}
 
@@ -38,12 +30,29 @@ const JobEditForm: React.FC<Props> = () => {
 
 	const onFinish = (values: any) => {
 		console.log("Success:", values);
+
+	const jobToUpdate = Object.entries(jobs)
+		.flatMap(([category, categoryJobs]) =>
+			categoryJobs.map((job) => ({ ...job, category }))
+		)
+		.find((job) => job.jobId === clickedJobCardId);
+
+		const updatedJob = {
+			...jobToUpdate,
+			jobTitle: values.jobtitle,
+			companyName: values.companyName,
+			description: values.description,
+			tag: values.tags,
+			jobUrl: values.jobUrl,
+			section: values.section,
+			salary: values.salary,
+			location: values.location,
+		};
+
+		editJob(jobToUpdate, updatedJob);
+		handleJobEditFormOk();
 	};
-	console.log(
-		Object.values(jobs)
-			.find((item) => item.find((item) => item.jobId === clickedJobCardId))
-			?.find((item) => item.jobId === clickedJobCardId)?.section
-	);
+
 	return (
 		<div>
 			<Modal
@@ -60,7 +69,7 @@ const JobEditForm: React.FC<Props> = () => {
 			>
 				<Form
 					form={form}
-					name="addJob"
+					name="editDetails"
 					labelCol={{ span: 8 }}
 					wrapperCol={{ span: 16 }}
 					initialValues={{ remember: true }}
@@ -165,7 +174,6 @@ const JobEditForm: React.FC<Props> = () => {
 									background: "#fbfcfc",
 								}}
 								placeholder="Job Url"
-								defaultValue={"helo"}
 							/>
 						</Form.Item>
 						<Row>

@@ -13,13 +13,11 @@ const onSearch: SearchProps["onSearch"] = (value, _e, info) =>
 	console.log(info?.source, value);
 
 const style: React.CSSProperties = {
-	background: "#e1edff",
 	borderRadius: "10px",
 	padding: "8px 0",
 	height: "100%",
-	scrollbarWidth: "thin",
-	scrollbarColor: "blue",
 	display: "flex",
+	background: "#e1edff",
 	flexDirection: "column",
 };
 
@@ -120,19 +118,22 @@ const JobDashboard: React.FC<Props> = () => {
 										backgroundPosition: "0 0 50px 50px",
 										backgroundSize: "20px 20px",
 										overflowY: "scroll",
-										// paddingLeft: "5px",
 									}}
 									className="col"
 								>
-									{jobsArray.map((item, index) => (
-										<JobCard
-											jobTitle={item.jobTitle}
-											companyName={item.companyName}
-											date={item.date}
-											key={index}
-											id={item.jobId}
-										/>
-									))}
+									{jobsArray.map((item, index) => {
+										if (item.section === category) {
+											return (
+												<JobCard
+													jobTitle={item.jobTitle}
+													companyName={item.companyName}
+													date={item.date}
+													key={index}
+													id={item.jobId}
+												/>
+											);
+										}
+									})}
 								</div>
 							</div>
 						</Col>
