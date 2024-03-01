@@ -1,30 +1,54 @@
-# React + TypeScript + Vite
+# Kanban Board App
+This is a Kanban board application built with React, Ant Design components, Zustand for state management, React Beautiful DND for drag and drop functionality, and TypeScript for static type checking.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Installation
+To run the application locally, follow these steps:
+ - Clone this repository to your local machine.
+-Navigate to the project directory.
+-Install dependencies using npm install or yarn install.
+-Start the development server using npm run dev or yarn start.
 
-Currently, two official plugins are available:
+# Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+ # JobAddForm
+ -Allows users to add a new job to the Kanban board.
+-Provides input fields for job title, company, location, description, etc.
 
-## Expanding the ESLint configuration
+# JobEditForm
+ -Allows users to edit the details of a job.
+ -Similar input fields as JobAddForm but pre-filled with existing job details.
+ 
+# JobDetailsForm
+ Displays detailed information about a specific job.
+ Allows users to edit or delete the job.
+ Provides buttons for updating or deleting the job.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+# JobDashboard
+ Displays the Kanban board with different columns representing job categories (e.g., Applied, Interviewing, Saved, Offer & Reject).
+ Each column contains JobCard components representing individual job postings.
 
-- Configure the top-level `parserOptions` property like this:
+# JobCard
+ Represents an individual job posting within the Kanban board.
+ Displays basic information about the job such as title and company.
+ Supports drag and drop functionality for moving cards between different columns.
+ 
+# SideDrawer
+A side drawer component for additional actions or navigation.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+# Navbar
+Navigation bar component for easy access to different parts of the application.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+# State Management using Zustand
+The store folder contains the Zustand store for managing application state. Zustand is used for its simplicity and performance benefits.
+
+store.tsx: Defines the Zustand store for managing job-related state.
+State includes an array of jobs, current job details, etc.
+Provides actions for adding, editing, deleting jobs, and updating job details.
+
+# Usage
+Start by adding jobs using the JobAddForm.
+View the Kanban board on the JobDashboard component.
+Drag and drop JobCards between different columns to change the job category.
+Click on a JobCard to view more details using JobDetailsForm.
+Edit or delete job details as needed.
