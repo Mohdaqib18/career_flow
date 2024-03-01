@@ -36,6 +36,13 @@ type Action = {
 	handleJobEditFormCancel: () => void;
 	showJobEditFormModal: () => void;
 	updateJobCardIdClicked: (id: State["clickedJobCardId"]) => void;
+	updateJobSectionOrder: (job: any, category: any) => void;
+	updateCardsBetweenSection: (
+		startSectionName: any,
+		startSectionArray: any,
+		finishSectionName: any,
+		finishSectionArray: any
+	) => void;
 };
 
 export const useJobInfoStore = create<State & Action>((set) => ({
@@ -45,44 +52,44 @@ export const useJobInfoStore = create<State & Action>((set) => ({
 
 	jobs: {
 		Saved: [
-			{
-				jobTitle: "Software Engineer",
-				companyName: "Meta",
-				description: "Frontend development team",
-				date: "28-02-2024",
-				jobId: "184",
-				section: "Saved",
-				tag: [],
-				location: "Mumbai",
-				salary: "90000",
-				jobUrl: "www.meta.com",
-			},
+			// {
+			// 	jobTitle: "Software Engineer",
+			// 	companyName: "Meta",
+			// 	description: "Frontend development team",
+			// 	date: "28-02-2024",
+			// 	jobId: "184",
+			// 	section: "Saved",
+			// 	tag: [],
+			// 	location: "Mumbai",
+			// 	salary: "90000",
+			// 	jobUrl: "www.meta.com",
+			// },
 		],
 		Applied: [
-			{
-				jobTitle: "Software Engineer",
-				companyName: "Google",
-				description: "Backend development team",
-				date: "28-02-2024",
-				jobId: "124",
-				section: "Applied",
-				tag: [],
-				location: "Bangalore",
-				salary: "85000",
-				jobUrl: "www.google.com",
-			},
-			{
-				jobTitle: "Product Manager",
-				companyName: "Apple",
-				description: "Fullstack development team",
-				date: "28-02-2024",
-				jobId: "122",
-				section: "Applied",
-				tag: [],
-				location: "Delhi",
-				salary: "105000",
-				jobUrl: "www.apple.com",
-			},
+			// {
+			// 	jobTitle: "Software Engineer",
+			// 	companyName: "Google",
+			// 	description: "Backend development team",
+			// 	date: "28-02-2024",
+			// 	jobId: "124",
+			// 	section: "Applied",
+			// 	tag: [],
+			// 	location: "Bangalore",
+			// 	salary: "85000",
+			// 	jobUrl: "www.google.com",
+			// },
+			// {
+			// 	jobTitle: "Product Manager",
+			// 	companyName: "Apple",
+			// 	description: "Fullstack development team",
+			// 	date: "28-02-2024",
+			// 	jobId: "122",
+			// 	section: "Applied",
+			// 	tag: [],
+			// 	location: "Delhi",
+			// 	salary: "105000",
+			// 	jobUrl: "www.apple.com",
+			// },
 		],
 		Interviewing: [],
 		Offer: [],
@@ -97,6 +104,35 @@ export const useJobInfoStore = create<State & Action>((set) => ({
 			jobs: {
 				...state.jobs,
 				[category]: [job, ...(state.jobs[category] || [])],
+			},
+		})),
+	updateJobSectionOrder: (job, category) =>
+		set((state) => ({
+			...state,
+			jobs: {
+				...state.jobs,
+				[category]: [...job],
+			},
+		})),
+
+	updateCardsBetweenSection: (
+		startSectionName,
+		startSectionArray,
+		finishSectionName,
+		finishSectionArray
+	) =>
+		set((state) => ({
+		
+			jobs: {
+				...state.jobs,
+				[startSectionName]: [
+				
+					...startSectionArray,
+				],
+				[finishSectionName]: [
+				
+					...finishSectionArray,
+				],
 			},
 		})),
 

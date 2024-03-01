@@ -9,6 +9,7 @@ import JobAddForm from "./components/JobAddForm";
 import JobDetailsForm from "./components/JobDetailsForm";
 import JobDashboard from "./components/JobDashboard";
 import JobEditForm from "./components/JobEditForm";
+import { useJobInfoStore } from "../store/store";
 
 const { Content } = Layout;
 
@@ -16,6 +17,8 @@ const App: React.FC = () => {
 	const {
 		token: { colorBgContainer, borderRadiusLG },
 	} = theme.useToken();
+
+	const droppableIds = useJobInfoStore((state) => state.droppableIds);
 
 	return (
 		<Layout
@@ -48,10 +51,10 @@ const App: React.FC = () => {
 							flexDirection: "column",
 						}}
 					>
-						<JobDashboard />
+						<JobDashboard/>
 						<JobAddForm />
 						<JobDetailsForm />
-						<JobEditForm/>
+						<JobEditForm />
 					</Content>
 				</Layout>
 			</Content>

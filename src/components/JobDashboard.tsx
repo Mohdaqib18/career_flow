@@ -26,11 +26,81 @@ interface Props {
 	// showAddFormModal: () => void;
 	// showEditFormModal: () => void;
 }
+
+const sections = ["Saved", "Applied", "Interviewing", "Offer"];
 const JobDashboard: React.FC<Props> = () => {
 	const jobs = useJobInfoStore((state) => state.jobs);
+	const updatejobSectionOrder = useJobInfoStore(
+		(state) => state.updateJobSectionOrder
+	);
+	const updateCardsBetweenSection = useJobInfoStore(
+		(state) => state.updateCardsBetweenSection
+	);
 	const showAddFormModal = useJobInfoStore((state) => state.showAddFormModal);
 
-	const onDragEnd = (result: any) => {};
+	const onDragEnd = (result: any) => {
+		const { destination, source, draggableId } = result;
+
+		if (!destination) {
+			return;
+		}
+
+		// if (
+		// 	destination.droppableId === source.droppableId &&
+		// 	destination.index === source.index
+		// ) {
+		// 	return;
+		// }
+
+		const startSectionName = source.droppableId.split("_")[0];
+
+		const finishSectionName = destination.droppableId.split("_")[0];
+
+		if (startSectionName === finishSectionName) {
+			const sectionNewJobsArray = Array.from(jobs[startSectionName]);
+
+			const draggableItem = jobs[startSectionName].filter(
+				(item) => item.jobId === draggableId
+			);
+
+			sectionNewJobsArray.splice(source.index, 1);
+			sectionNewJobsArray.splice(destination.index, 0, ...draggableItem);
+
+			updatejobSectionOrder(sectionNewJobsArray, startSectionName);
+
+			return;
+		}
+		// Moving from one section to another
+
+		const startSectionArray = Array.from(jobs[startSectionName]);
+
+		const draggableItem = jobs[startSectionName].filter(
+			(item) => item.jobId === draggableId
+		);
+
+		//change the section of the draggable item to finish section
+
+		draggableItem[0].section = finishSectionName;
+
+		// Remove dragged job  from this array
+		startSectionArray.splice(source.index, 1);
+
+		//Add the dragged job to finish array;
+
+		const finishSectionArray = Array.from(jobs[finishSectionName]);
+
+		finishSectionArray.splice(destination.index, 0, ...draggableItem);
+		console.log(startSectionArray);
+		console.log(finishSectionArray);
+
+		updateCardsBetweenSection(
+			startSectionName,
+			startSectionArray,
+			finishSectionName,
+			finishSectionArray
+		);
+	};
+
 	const generateUniqueId = () => {
 		return "_" + Math.random().toString(36).substr(2, 9);
 	};
@@ -82,7 +152,6 @@ const JobDashboard: React.FC<Props> = () => {
 						style={{ height: "100%" }}
 					>
 						{Object.entries(jobs).map(([category, jobsArray], index) => {
-							const categoryId = `category-${index}`;
 							return (
 								<Col className="gutter-row" span={6} key={index}>
 									<div style={style}>
@@ -119,7 +188,8 @@ const JobDashboard: React.FC<Props> = () => {
 												</span>
 											</div>
 										</div>
-										<Droppable droppableId={generateUniqueId()}>
+
+										<Droppable droppableId={category + generateUniqueId()}>
 											{(provided) => (
 												<div
 													style={{
@@ -127,7 +197,7 @@ const JobDashboard: React.FC<Props> = () => {
 														background: "radial-gradient(#d6e4f8 20%,#0000 0)",
 														backgroundPosition: "0 0 50px 50px",
 														backgroundSize: "20px 20px",
-														overflowY: "scroll",
+														overflowY: "auto",
 													}}
 													className="col"
 													{...provided.droppableProps}
