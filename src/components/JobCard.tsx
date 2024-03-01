@@ -21,7 +21,7 @@ const JobCard = ({
 	const updateJobCardIdClicked = useJobInfoStore(
 		(state) => state.updateJobCardIdClicked
 	);
-	const clickedJobCardId = useJobInfoStore((state) => state.clickedJobCardId);
+	
 
 	const handleOnClick = () => {
 		showJobDetailsFormModal();

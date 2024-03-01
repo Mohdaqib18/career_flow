@@ -27,7 +27,6 @@ interface Props {
 	// showEditFormModal: () => void;
 }
 
-const sections = ["Saved", "Applied", "Interviewing", "Offer"];
 const JobDashboard: React.FC<Props> = () => {
 	const jobs = useJobInfoStore((state) => state.jobs);
 	const updatejobSectionOrder = useJobInfoStore(
@@ -115,9 +114,10 @@ const JobDashboard: React.FC<Props> = () => {
 						gap: 10,
 						alignItems: "center",
 						justifyContent: "space-between",
+						height: "80px",
 					}}
 				>
-					<h1>My 2024 Job Search</h1>
+					<h1 className="heading">My 2024 Job Search</h1>
 
 					<div
 						style={{
@@ -130,11 +130,12 @@ const JobDashboard: React.FC<Props> = () => {
 							placeholder="Search"
 							allowClear
 							onSearch={onSearch}
-							style={{ width: 300 }}
+							className="search"
 						/>
 						<RangePicker
 							format="MMM DD YYYY"
 							placeholder={["AddedFrom", "AddedUntil"]}
+							className="range"
 						/>
 
 						<Button type="primary" onClick={showAddFormModal}>
@@ -153,7 +154,14 @@ const JobDashboard: React.FC<Props> = () => {
 					>
 						{Object.entries(jobs).map(([category, jobsArray], index) => {
 							return (
-								<Col className="gutter-row" span={6} key={index}>
+								<Col
+									className="gutter-row"
+									key={index}
+									xs={24}
+									sm={12}
+									md={8}
+									lg={6}
+								>
 									<div style={style}>
 										<div
 											style={{

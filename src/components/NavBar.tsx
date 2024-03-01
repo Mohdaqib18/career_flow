@@ -5,6 +5,7 @@ import logo from "../assets/images/logo.png";
 import star from "../assets/images/star.svg";
 import profileIcon from "../assets/images/profile_icon.png";
 import { Dropdown, Space, Button } from "antd";
+import SideDrawer from "./SideDrawer";
 
 const { Header } = Layout;
 
@@ -35,7 +36,6 @@ const items: MenuProps["items"] = [
 ];
 
 const NavBar = () => {
-
 	return (
 		<div>
 			<Header
@@ -45,8 +45,11 @@ const NavBar = () => {
 					justifyContent: "space-between",
 				}}
 			>
-				<img src={logo} alt="logo" width={200} />
-				<div style={{ display: "flex", gap: "20px" }}>
+				<img src={logo} alt="logo" width={200} className="logo" />
+				<div
+					// style={{ display: "flex", gap: "20px" }}
+					className="navbar-buttons"
+				>
 					<Dropdown menu={{ items }} trigger={["click"]}>
 						<Button
 							style={{
@@ -79,6 +82,10 @@ const NavBar = () => {
 							<DownOutlined />
 						</Button>
 					</Dropdown>
+				</div>
+
+				<div className="side-drawer">
+					<SideDrawer />
 				</div>
 			</Header>
 		</div>

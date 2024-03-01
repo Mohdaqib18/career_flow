@@ -91,7 +91,6 @@ const JobDetailsForm: React.FC<Props> = ({}) => {
 		handleJobDetailsFormOk();
 	};
 
-	
 	return (
 		<div>
 			<Modal
@@ -224,7 +223,10 @@ const JobDetailsForm: React.FC<Props> = ({}) => {
 								</Modal>
 							</div>
 
-							<div style={{ display: "flex", gap: "10px" }}>
+							<div
+								style={{ display: "flex", gap: "10px" }}
+								className="edit-form-buttons"
+							>
 								<Button
 									danger
 									style={{ borderRadius: "4px" }}

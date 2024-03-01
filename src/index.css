@@ -37,3 +37,92 @@ body {
     color: #96a0b5;
     font-size: 14px;
 }
+
+
+@media (max-width: 768px) {
+    .logo {
+        width: 170px;
+
+    }
+
+    .search,
+    .range {
+        width: 170px;
+        display: none;
+
+    }
+
+    .heading {
+        font-size: 23px;
+    }
+
+    .navbar-buttons {
+        display: none
+    }
+
+    .side-drawer {
+        display: block;
+    }
+
+    .form-buttons {
+        display: flex;
+        flex-direction: column;
+    }
+
+}
+
+@media (min-width: 768px) and (max-width: 1267px) {
+    .logo {
+        width: 170px;
+
+    }
+
+    .search,
+    .range {
+        width: 170px;
+
+    }
+
+    .heading {
+        font-size: 23px;
+    }
+
+
+    .side-drawer {
+        display: none
+    }
+
+    .navbar-buttons {
+        display: flex;
+        gap: 20px;
+    }
+
+    .side-drawer {
+        display: none;
+    }
+}
+
+@media (min-width:1268px) {
+
+    .search,
+    .range {
+        width: 300px;
+
+    }
+
+
+
+    .navbar-buttons {
+        display: flex;
+        gap: 20px;
+    }
+
+    .side-drawer {
+        display: none;
+    }
+
+    .form-buttons {
+        margin-right: 50px;
+    }
+
+}

@@ -51,8 +51,8 @@ const JobAddForm: React.FC<Props> = () => {
 				tag: values.tags,
 				jobUrl: values.jobUrl,
 				section: values.section,
-				salary:values.salary,
-				location:values.location
+				salary: values.salary,
+				location: values.location,
 			},
 
 			values.section
@@ -66,7 +66,7 @@ const JobAddForm: React.FC<Props> = () => {
 				title="Add Job"
 				open={isAddFormModalOpen}
 				onOk={handleAddFormOk}
-				width={"45%"}
+				width={"55%"}
 				footer={""}
 				onCancel={(e) => {
 					form.resetFields();
@@ -158,9 +158,7 @@ const JobAddForm: React.FC<Props> = () => {
 							labelCol={{ span: 24 }}
 							wrapperCol={{ span: 24 }}
 							name="salary"
-							rules={[
-								{ required: true, message: "Please input the salary!" },
-							]}
+							rules={[{ required: true, message: "Please input the salary!" }]}
 						>
 							<Input
 								style={{
@@ -270,36 +268,39 @@ const JobAddForm: React.FC<Props> = () => {
 							borderTop: "1px solid var(--Gray-200, #eaecf0)",
 						}}
 					>
-						<Button
-							style={{
-								width: "35%",
-								height: "2.4rem",
-								background: "#edf3fd",
-								borderRadius: "6px",
-								marginRight: "1rem",
-								color: "#276cd2",
-								fontSize: " 15px",
-							}}
-							onClick={() => {
-								form.resetFields();
-								handleAddFormCancel();
-							}}
-						>
-							Cancel
-						</Button>
-						<Button
-							type="primary"
-							htmlType="submit"
-							style={{
-								width: "35%",
-								height: "2.4rem",
-								borderRadius: "6px",
-								backgroundColor: "#508de8",
-								fontSize: "15px",
-							}}
-						>
-							Submit
-						</Button>
+						<div className="form-buttons">
+							<Button
+								style={{
+									width: "45%",
+									height: "40px",
+									background: "#edf3fd",
+									borderRadius: "6px",
+									marginRight: "1rem",
+									color: "#276cd2",
+									fontSize: " 15px",
+								}}
+								onClick={() => {
+									form.resetFields();
+									handleAddFormCancel();
+								}}
+							>
+								Cancel
+							</Button>
+							<Button
+								type="primary"
+								htmlType="submit"
+								style={{
+									width: "45%",
+									height: "40px",
+									borderRadius: "6px",
+									backgroundColor: "#508de8",
+									fontSize: "15px",
+									marginTop: "10px",
+								}}
+							>
+								Submit
+							</Button>
+						</div>
 					</Form.Item>
 				</Form>
 			</Modal>
