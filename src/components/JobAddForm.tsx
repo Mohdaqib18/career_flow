@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Button, Checkbox, Form, Input, Modal, Select } from "antd";
+import React from "react";
+import { Button, Form, Input, Modal, Select } from "antd";
 import { useJobInfoStore } from "../../store/store";
 
 const onFinishFailed = (errorInfo: any) => {
@@ -27,7 +27,7 @@ const JobAddForm: React.FC<Props> = () => {
 	const [form] = Form.useForm();
 	const { Option } = Select;
 
-	const jobs = useJobInfoStore((state) => state.jobs);
+	
 	const isAddFormModalOpen = useJobInfoStore(
 		(state) => state.isAddFormModalOpen
 	);
@@ -68,7 +68,7 @@ const JobAddForm: React.FC<Props> = () => {
 				onOk={handleAddFormOk}
 				width={"55%"}
 				footer={""}
-				onCancel={(e) => {
+				onCancel={() => {
 					form.resetFields();
 					handleAddFormCancel();
 				}}

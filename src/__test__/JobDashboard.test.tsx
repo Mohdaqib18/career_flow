@@ -14,7 +14,7 @@ describe("JobDashboard", () => {
 	});
 
 
-	// You can add more tests for drag and drop functionality if needed
+	
 });
 
 Object.defineProperty(window, "matchMedia", {

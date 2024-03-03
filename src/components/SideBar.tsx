@@ -1,4 +1,4 @@
-import { createElement } from "react";
+
 import {
 	AppstoreOutlined,
 	BugOutlined,
@@ -7,15 +7,14 @@ import {
 	DownloadOutlined,
 	FileDoneOutlined,
 	FileTextOutlined,
-	FlagOutlined,
-	FolderOutlined,
+
 	HomeOutlined,
-	LaptopOutlined,
+	
 	LinkedinOutlined,
 	SearchOutlined,
 	UserOutlined,
 } from "@ant-design/icons";
-import { Button, Col, Menu, Row, Tooltip, Layout, theme } from "antd";
+import { Button, Menu, Tooltip, Layout, theme } from "antd";
 
 const { Sider } = Layout;
 
@@ -34,10 +33,9 @@ const items = [
 	label: `${item.label}`,
 }));
 
-
 const SideBar: React.FC = () => {
 	const {
-		token: { colorBgContainer, borderRadiusLG },
+		token: { colorBgContainer },
 	} = theme.useToken();
 
 	return (

@@ -10,4 +10,5 @@ export default {
 		"\\.(css|less|sass|scss)$": "identity-obj-proxy",
 	},
 	resolver: undefined,
+
 };
