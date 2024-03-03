@@ -1,4 +1,4 @@
-import { Button, Form, Modal, Select, Menu, Row, Col } from "antd";
+import { Button, Form, Modal, Menu, Row, Col } from "antd";
 import company_placeholder_image from "../assets/images/company_placeholder_image.png";
 import job_placeholder_image from "../assets/images/job_placeholder_image.png";
 import salary from "../assets/images/salary.png";
