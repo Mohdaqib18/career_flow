@@ -61,7 +61,7 @@ const JobAddForm: React.FC<Props> = () => {
 	};
 
 	return (
-		<div>
+		<div data-testId="jobAddForm">
 			<Modal
 				title="Add Job"
 				open={isAddFormModalOpen}

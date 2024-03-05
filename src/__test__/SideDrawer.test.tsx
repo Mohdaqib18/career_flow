@@ -1,4 +1,3 @@
-
 import { render, fireEvent, screen } from "@testing-library/react";
 import SideDrawer from "../components/SideDrawer";
 
@@ -29,7 +28,5 @@ describe("SideDrawer", () => {
 		// Click the 'Close' button in the drawer
 		const closeButton = screen.getByRole("button", { name: "Close" });
 		fireEvent.click(closeButton);
-
-		
 	});
 });

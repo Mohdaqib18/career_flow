@@ -54,14 +54,14 @@ const JobEditForm: React.FC<Props> = () => {
 	};
 
 	return (
-		<div>
+		<div data-testId="jobEditForm">
 			<Modal
 				title="Edit Job Details"
 				open={isJobEditModalOpen}
 				onOk={handleJobEditFormOk}
 				width={"60%"}
 				footer={""}
-				onCancel={(e) => {
+				onCancel={() => {
 					form.resetFields();
 					handleJobEditFormCancel();
 				}}

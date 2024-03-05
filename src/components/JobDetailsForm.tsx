@@ -37,7 +37,7 @@ const items = [
 	{ icon: ContactsOutlined, label: "Contacts" },
 	{ icon: FileDoneOutlined, label: "Documents" },
 	{ icon: CheckSquareOutlined, label: "Tasks" },
-].map((item, index) => ({
+].map((item) => ({
 	key: item.label,
 	icon: <item.icon style={{ fontSize: "20px" }} />,
 	label: `${item.label}`,
@@ -81,7 +81,7 @@ const JobDetailsForm: React.FC<Props> = ({}) => {
 		(state) => state.showJobEditFormModal
 	);
 	const handleDeleteButton = () => {
-		Object.entries(jobs).forEach(([category, jobsArray], index) =>
+		Object.entries(jobs).forEach(([category, jobsArray]) =>
 			deleteJob(
 				jobsArray.filter((item: any) => item.jobId !== clickedJobCardId),
 				category
@@ -92,14 +92,14 @@ const JobDetailsForm: React.FC<Props> = ({}) => {
 	};
 
 	return (
-		<div>
+		<div data-testid="jobDetailsForm">
 			<Modal
 				title="Job Details"
 				open={isJobDetailsModalOpen}
 				onOk={handleJobDetailsFormOk}
 				width={"75%"}
 				footer={""}
-				onCancel={(e) => {
+				onCancel={() => {
 					form.resetFields();
 					handleJobDetailsCancel();
 				}}
